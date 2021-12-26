@@ -3,12 +3,28 @@ class Solution {
     
     public int longestPalindromeSubseq(String s) {
             
-            for(int[] a : dp)
+            for(int i = 0 ; i < s.length() ; i++)
             {
-                Arrays.fill(a,-1);
+                dp[i][i] = 1;
+               // dp[i][s.length()] = 1;
             }
-            return plan(s,0,s.length()-1);
         
+            for(int i = 1 ; i < s.length() ; i++)
+            {
+                for(int j = i-1 ; j >= 0 ; j--)
+                {
+                    if(s.charAt(i) == s.charAt(j))
+                    {
+                        dp[i][j] = 2 + dp[i-1][j+1];
+                    }
+                    else
+                    {
+                        dp[i][j] = Math.max(dp[i-1][j],dp[i][j+1]);
+                    }
+                }
+            }
+        
+            return dp[s.length()-1][0];
         }
     
     private int plan(String s,int i , int j)
