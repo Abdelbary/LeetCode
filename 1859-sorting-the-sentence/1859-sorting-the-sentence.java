@@ -1,8 +1,8 @@
 class Pair{
-    String s;
+    StringBuilder s;
     int i;
     
-    public Pair(String s, int i)
+    public Pair(StringBuilder s, int i)
     {
         this.s = s;
         this.i = i;
@@ -18,13 +18,13 @@ class Solution {
        
         for(String w : words)
         {
-            pq.add(new Pair(w,w.charAt(w.length()-1) - '0'));
+            pq.add(new Pair(new StringBuilder(w),w.charAt(w.length()-1) - '0'));
         }
         
         while(pq.isEmpty() == false)
         {
             Pair p = pq.remove();
-            p.s = p.s.substring(0,p.s.length()-1);
+            p.s.setLength(p.s.length()-1);
             ans.append(p.s);
             ans.append(" ");
         }
