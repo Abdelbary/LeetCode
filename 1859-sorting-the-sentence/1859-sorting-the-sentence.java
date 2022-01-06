@@ -12,23 +12,22 @@ class Solution {
     public String sortSentence(String s) {
         
         String[] words = s.split(" ");
-        StringBuilder ans = new StringBuilder();
+        String[] ans   = new String[words.length];
+        StringBuilder sb = new StringBuilder();
         
-        PriorityQueue<Pair> pq = new PriorityQueue<Pair>((x,y) -> (x.i - y.i));
-       
         for(String w : words)
         {
-            pq.add(new Pair(new StringBuilder(w),w.charAt(w.length()-1) - '0'));
+            int indx    = w.charAt(w.length() - 1) - '0';
+            ans[indx-1] = w;
         }
         
-        while(pq.isEmpty() == false)
+        for(String w : ans)
         {
-            Pair p = pq.remove();
-            p.s.setLength(p.s.length()-1);
-            ans.append(p.s);
-            ans.append(" ");
+            sb.append(w);
+            sb.deleteCharAt(sb.length()-1);
+            sb.append(" ");
         }
         
-        return ans.toString().trim();
+        return sb.toString().trim();
     }
 }
