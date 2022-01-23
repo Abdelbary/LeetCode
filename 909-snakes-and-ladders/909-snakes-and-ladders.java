@@ -57,9 +57,16 @@ class Solution {
             
             for(int dic = 1 ; dic < 7 ; dic++)
             {
-               int newNum = map.getOrDefault(currNum+dic,currNum+dic);
+               //int newNum = map.getOrDefault(currNum+dic,currNum+dic);
+               int newNum = currNum + dic;
                //System.out.println(">>> : "+ newNum);
-
+               int[] inds = getInds(newNum,board.length);
+                //System.out.println(">>> : "+ newNum + " "+inds[0] + " " + inds[1]);
+               if(newNum <= n && board[inds[0]][inds[1]] != -1)
+               {
+                   newNum = board[inds[0]][inds[1]];
+               }
+                
                if(newNum <= n && visited[newNum] == false)
                {
                    visited[newNum] = true;
@@ -77,5 +84,17 @@ class Solution {
         }
         
         return (currNum == n)? dis : -1;
+    }
+    
+    private int[] getInds(int pos,int n)
+    {
+        pos--;
+        int r = n-(pos / n) - 1;
+        int c = (pos%n);
+        if((pos/n)%2 == 1)
+        {
+            c = n - c - 1;
+        }
+        return new int[]{r,c};
     }
 }
