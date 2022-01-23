@@ -39,6 +39,7 @@ class Solution {
         }
         
         q.offerLast(1);
+        visited[1] = true;
         int count = 0;
         int currNum = -1;
         int lvlCount = 1;
@@ -47,7 +48,6 @@ class Solution {
         {
             currNum = q.removeFirst();
             //System.out.println(currNum);
-            visited[currNum] = true;
             lvlCount--;
             
             if(currNum == n)
@@ -62,6 +62,7 @@ class Solution {
 
                if(newNum <= n && visited[newNum] == false)
                {
+                   visited[newNum] = true;
                    q.offerLast(newNum);
                    count++;
                }
