@@ -8,6 +8,78 @@
  * }
  */
 class Solution {
+    List<Integer> distancKNodes = new ArrayList<Integer>();
+    
+    public List<Integer> distanceK(TreeNode root, TreeNode target, int k) {
+        getKDistantNodes(root,target,k);
+        return distancKNodes;
+    }
+    
+    int getKDistantNodes(TreeNode root, TreeNode target, int k)
+    {
+        if(root == null)
+        {
+            return -1;
+        }
+        
+        if(root == target)
+        {
+            addNodes(root,k);
+            return 1;
+        }
+        
+        int leftResult  = getKDistantNodes(root.left,target,k);
+        int rightResult = getKDistantNodes(root.right,target,k);
+        
+        if(leftResult != -1)
+        {
+            if(k-leftResult == 0)
+            {
+                addNodes(root,0);
+            }
+            else
+            {
+            addNodes(root.right,k-leftResult-1);
+            }
+            return leftResult+1;
+        }
+        if(rightResult != -1)
+        {
+            if(k-rightResult == 0)
+            {
+                addNodes(root,0);
+            }
+            else
+            {
+                addNodes(root.left,k-rightResult-1);
+            }
+            return rightResult+1;
+        }
+        
+        return -1;
+    }
+    
+    void addNodes(TreeNode root,int k)
+    {
+        if(root == null || k < 0)
+        {
+            return;
+        }
+        if(k == 0)
+        {
+            distancKNodes.add(root.val);
+        }
+        
+        addNodes(root.right,k-1);
+        addNodes(root.left,k-1);
+        
+        return;
+    }
+    
+}
+
+/*
+class Solution {
     HashMap<TreeNode,TreeNode> nodeParent = new HashMap<TreeNode,TreeNode>();
     public List<Integer> distanceK(TreeNode root, TreeNode target, int k) {
         
@@ -83,3 +155,4 @@ class Solution {
         return;
     }
 }
+*/
