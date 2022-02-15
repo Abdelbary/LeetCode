@@ -15,48 +15,47 @@
  */
 class Solution {
     public List<List<Integer>> levelOrder(TreeNode root) {
-    if(root == null)
-    {
-        return new ArrayList<List<Integer>>();
+        if(root == null)
+        {
+            return new ArrayList<List<Integer>>();
+        }
+        List<List<Integer>> levelOrderTraversLists = new ArrayList<List<Integer>>();
+        
+        Deque<TreeNode> queue = new ArrayDeque<TreeNode>();
+        queue.offerLast(root);
+        
+        int currentLevelNodesCount = 1;
+        int nextLevelNodesCount = 0;
+        int level = 0;
+        
+        List<Integer> currentLevelNodes = new ArrayList<Integer>();
+        
+        while(queue.isEmpty() == false)
+        {
+            TreeNode currentNode = queue.removeFirst();
+            currentLevelNodes.add(currentNode.val);
+            currentLevelNodesCount--;
+            
+            
+            if(currentNode.left != null)
+            {
+                queue.offerLast(currentNode.left);
+                nextLevelNodesCount++;
+            }
+            if(currentNode.right != null)
+            {
+                queue.offerLast(currentNode.right);
+                nextLevelNodesCount++;
+            }
+            if(currentLevelNodesCount == 0)
+            {
+                level++;
+                levelOrderTraversLists.add(currentLevelNodes);
+                currentLevelNodes = new ArrayList<Integer>();
+                currentLevelNodesCount = nextLevelNodesCount;
+                nextLevelNodesCount = 0;
+            }
+        }
+        return levelOrderTraversLists;  
     }
-    Deque<TreeNode> q  = new ArrayDeque<TreeNode>();
-    q.offerLast(root);
-    int currLevelNodeCount = 1;
-    int nextLevelNodeCount = 0;
-    List<Integer> levelNodes = new ArrayList<Integer>();
-    
-    List<List<Integer>> levelOrderTraversalArray = new ArrayList<List<Integer>>();
-
-    while(q.isEmpty() == false)
-    {
-      //System.out.println(q.size());
-      TreeNode currentNode = q.removeFirst();
-     
-      levelNodes.add(currentNode.val);
-
-      currLevelNodeCount--;
-
-      if(currentNode.left != null)
-      {
-        q.offerLast(currentNode.left);
-        nextLevelNodeCount++;
-      }
-      if(currentNode.right != null)
-      {
-        q.offerLast(currentNode.right);
-        nextLevelNodeCount++;
-      }
-      
-      if(currLevelNodeCount == 0)
-      {
-        currLevelNodeCount = nextLevelNodeCount;
-        nextLevelNodeCount = 0;
-        levelOrderTraversalArray.add(levelNodes);
-        levelNodes = new ArrayList<Integer>();
-      }
-    }
-
-    return levelOrderTraversalArray;
-  }
-    
 }
