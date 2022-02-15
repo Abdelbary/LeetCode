@@ -22,39 +22,28 @@ class Solution {
         List<List<Integer>> levelOrderTraversLists = new ArrayList<List<Integer>>();
         
         Deque<TreeNode> queue = new ArrayDeque<TreeNode>();
-        queue.offerLast(root);
-        
-        int currentLevelNodesCount = 1;
-        int nextLevelNodesCount = 0;
-        int level = 0;
-        
-        List<Integer> currentLevelNodes = new ArrayList<Integer>();
+        queue.offerLast(root);          
         
         while(queue.isEmpty() == false)
         {
-            TreeNode currentNode = queue.removeFirst();
-            currentLevelNodes.add(currentNode.val);
-            currentLevelNodesCount--;
+            int levelSize = queue.size();
+            List<Integer> currentLevelNodes = new ArrayList<Integer>();
             
-            
-            if(currentNode.left != null)
+            for(int i = 0 ; i < levelSize ; i++)
             {
-                queue.offerLast(currentNode.left);
-                nextLevelNodesCount++;
+                TreeNode currentNode = queue.removeFirst();
+                currentLevelNodes.add(currentNode.val);
+                
+                if(currentNode.left != null)
+                {
+                    queue.offerLast(currentNode.left);
+                }
+                if(currentNode.right != null)
+                {
+                    queue.offerLast(currentNode.right);
+                }
             }
-            if(currentNode.right != null)
-            {
-                queue.offerLast(currentNode.right);
-                nextLevelNodesCount++;
-            }
-            if(currentLevelNodesCount == 0)
-            {
-                level++;
-                levelOrderTraversLists.add(currentLevelNodes);
-                currentLevelNodes = new ArrayList<Integer>();
-                currentLevelNodesCount = nextLevelNodesCount;
-                nextLevelNodesCount = 0;
-            }
+            levelOrderTraversLists.add(currentLevelNodes);
         }
         return levelOrderTraversLists;  
     }
