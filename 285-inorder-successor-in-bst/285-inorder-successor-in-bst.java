@@ -15,6 +15,10 @@ class Solution {
         }
          
         TreeNode parentNode = getNodeParent(root,p);
+        if(parentNode != null && parentNode.val <= p.val)
+        {
+            parentNode = null;
+        }
         TreeNode childSuccessorNode = getSuccessor(p);
         
         if(childSuccessorNode == null && parentNode == null)
@@ -27,20 +31,14 @@ class Solution {
             {
                 return childSuccessorNode;
             }
-            else if(parentNode.val > p.val)
-            {
                 return parentNode;
-            }
+            
         }
         if(childSuccessorNode != null )
         {
             return childSuccessorNode;
         }
-        if(parentNode.val > p.val)
-        {
-            return parentNode; 
-        }
-        return null;
+        return parentNode;
     }
     
     TreeNode getNodeParent(TreeNode root, TreeNode p)
@@ -85,24 +83,14 @@ class Solution {
         {
             return null;
         }
+        TreeNode successor = root.right;
         
-        if(root.right != null)
+        while(successor != null && successor.left != null)
         {
-            return leftDfs(root.right);
+            successor = successor.left;
         }
         
-        return null;
+        return successor;
     }
     
-    TreeNode leftDfs(TreeNode root)
-    {
-        TreeNode leftMostNode = root;
-        while(leftMostNode.left != null)
-        {
-            leftMostNode = leftMostNode.left;
-        }
-        
-        return leftMostNode;
-            
-    }
 }
