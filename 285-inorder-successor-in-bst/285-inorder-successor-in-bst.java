@@ -13,32 +13,96 @@ class Solution {
         {
             return null;
         }
+         
+        TreeNode parentNode = getNodeParent(root,p);
+        TreeNode childSuccessorNode = getSuccessor(p);
         
-        TreeNode leftTreeResult = inorderSuccessor(root.left,p);
-        TreeNode rightTreeResult = inorderSuccessor(root.right,p);
-        
-        if (leftTreeResult == null && rightTreeResult == null && root.val <= p.val)
+        if(childSuccessorNode == null && parentNode == null)
         {
             return null;
         }
-        int minVal = (1000_000_007);
-        TreeNode returnNode = null;
-        if(root.val > p.val)
+        if(childSuccessorNode != null && parentNode != null)
         {
-            minVal = root.val;
-            returnNode = root;
+            if(parentNode.val > childSuccessorNode.val)
+            {
+                return childSuccessorNode;
+            }
+            else if(parentNode.val > p.val)
+            {
+                return parentNode;
+            }
         }
-        if(leftTreeResult != null && leftTreeResult.val < minVal)
+        if(childSuccessorNode != null )
         {
-            minVal = leftTreeResult.val;
-            returnNode = leftTreeResult;
+            return childSuccessorNode;
         }
-        if(rightTreeResult != null && rightTreeResult.val < minVal)
+        if(parentNode.val > p.val)
         {
-            minVal = rightTreeResult.val;
-            returnNode = rightTreeResult;
+            return parentNode; 
+        }
+        return null;
+    }
+    
+    TreeNode getNodeParent(TreeNode root, TreeNode p)
+    {
+        
+        if(root == null || root == p)
+        {
+            return null;
         }
         
-        return returnNode;
+        if(root.right == p || root.left == p)
+        {
+            return root;
+        }
+        
+        TreeNode leftNodeResult = getNodeParent(root.left,p);
+        TreeNode rightNodeResult = getNodeParent(root.right,p);
+        
+        if(leftNodeResult != null)
+        {
+            if(leftNodeResult.val < p.val)
+            {
+                return root;
+            }
+            return leftNodeResult;
+        }
+        if(rightNodeResult != null)
+        {
+            if(rightNodeResult.val < p.val )
+            {
+                return root;
+            }
+            return rightNodeResult;
+        }
+        
+        return null;
+    }
+    
+    TreeNode getSuccessor(TreeNode root)
+    {
+        if(root == null)
+        {
+            return null;
+        }
+        
+        if(root.right != null)
+        {
+            return leftDfs(root.right);
+        }
+        
+        return null;
+    }
+    
+    TreeNode leftDfs(TreeNode root)
+    {
+        TreeNode leftMostNode = root;
+        while(leftMostNode.left != null)
+        {
+            leftMostNode = leftMostNode.left;
+        }
+        
+        return leftMostNode;
+            
     }
 }
