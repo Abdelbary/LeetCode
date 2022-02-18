@@ -40,7 +40,11 @@ class Solution {
             return null;
         }
         
-      
+        if(previous == p)
+        {
+            successorNode =  root;
+        }
+  
         if(root.left == null && root.right == null)
         {
             return root;
