@@ -42,9 +42,10 @@ class Solution {
         }
         getParentSucessor(root.left,p);
         
-        if(previous == p )
+        if(previous == p && successorNode == null)
         {
             successorNode = root;
+            return;
         }
         
         previous = root;
