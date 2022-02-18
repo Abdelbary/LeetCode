@@ -7,6 +7,30 @@
  *     TreeNode(int x) { val = x; }
  * }
  */
+
+class Solution {
+
+    public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {
+        
+        TreeNode successor = null;
+        
+        while(root != null)
+        {
+            if(root.val <= p.val)
+            {
+                root = root.right;
+            }
+            else
+            {
+                successor = root;
+                root = root.left;
+            }
+        }
+        
+        return successor;
+    }
+}
+/*
 class Solution {
     TreeNode previous;
     TreeNode successorNode;
@@ -45,7 +69,8 @@ class Solution {
         if(previous == p && successorNode == null)
         {
             successorNode = root;
-            return;
+            return; // adding this return should enhance the performance however case we are cutting the normal operation we have to check
+            //if the successorNode is still null befor entering
         }
         
         previous = root;
@@ -53,7 +78,7 @@ class Solution {
         getParentSucessor(root.right,p);
     }
 }
-    
+*/
 /*
 
 class Solution {
