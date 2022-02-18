@@ -8,6 +8,7 @@
  * }
  */
 class Solution {
+    TreeNode previous;
     TreeNode successorNode;
     public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {
         if(root == null)
@@ -27,38 +28,28 @@ class Solution {
         }
         else
         {
-            getParentSucessor(root,p,null);
+            getParentSucessor(root,p);
             return successorNode;
         }
         
     }
     
-    TreeNode getParentSucessor(TreeNode root,TreeNode p,TreeNode previous)
+    void getParentSucessor(TreeNode root,TreeNode p)
     {
         if(root == null)
         {
-            return null;
+            return;
+        }
+        getParentSucessor(root.left,p);
+        
+        if(previous == p )
+        {
+            successorNode = root;
         }
         
-
-  
-        if(root.left == null && root.right == null)
-        {
-            return root;
-        }
-        if(root.left != null)
-        {
-            previous = getParentSucessor(root.left,p,previous);
-        }
-        if(previous == p)
-        {
-            successorNode =  root;
-        }
-        if(root.right != null)
-        {
-            return getParentSucessor(root.right,p,root);
-        }
-        return root;
+        previous = root;
+        
+        getParentSucessor(root.right,p);
     }
 }
     
