@@ -37,16 +37,15 @@ class Solution {
         }
         ListNode curr = head;
         ListNode prev = null;
-        ListNode next = curr.next;
+        ListNode next = null;
         
-        while(next != null)
+        while(curr != null)
         {
+            next = curr.next;
             curr.next = prev;
             prev = curr;
             curr = next;
-            next = next.next;
         }
-        curr.next = prev;
-        return curr;
+        return prev;
     }
 }
