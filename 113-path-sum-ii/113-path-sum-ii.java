@@ -16,10 +16,6 @@
 class Solution {
     List<List<Integer>> pathes = new ArrayList<List<Integer>>();
     public List<List<Integer>> pathSum(TreeNode root, int targetSum) {
-        if(root == null)
-        {
-            return pathes;
-        }
         List<Integer> path = new ArrayList<Integer>();
         
         dfs(root,targetSum,path);
