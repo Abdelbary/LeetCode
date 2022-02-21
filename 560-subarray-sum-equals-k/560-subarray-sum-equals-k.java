@@ -1,25 +1,25 @@
 class Solution {
     public int subarraySum(int[] nums, int k) {
-        int[] cumlativeSum = new int[nums.length+1];
-        int ans = 0;
-        cumlativeSum[0] = 0;
-        
-        for(int i = 1 ; i < cumlativeSum.length ; i++)
+        int sum = 0;
+        int count = 0;
+        Map<Integer,Integer> map = new HashMap<Integer,Integer>();
+        map.put(0,1);
+        for(int i =0 ; i < nums.length ; i++)
         {
-            cumlativeSum[i] = cumlativeSum[i-1] + nums[i-1];
-        }
-        
-        for(int i =0 ; i < cumlativeSum.length ; i++)
-        {
-            for(int j = i+1 ; j < cumlativeSum.length; j++)
+            sum += nums[i];
+            
+            if(map.containsKey(sum-k))
             {
-                if(cumlativeSum[j]-cumlativeSum[i] == k)
-                {
-                    ans++;
-                }
+                count += map.get(sum-k);
             }
+            
+            map.put(sum,map.getOrDefault(sum,0)+1);
         }
-        
-        return ans;
+        return count;
     }
+    //sum = 0 ,1 , 2 , 3
+    //map{[0,1],[1,1],[3,1]}
+    //     |
+    //[1,1,1]
+    //count = 1
 }
