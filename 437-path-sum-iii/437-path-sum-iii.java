@@ -16,33 +16,34 @@
 class Solution {
     int count = 0;
     public int pathSum(TreeNode root, int targetSum) {
-        
-        dfs(root,targetSum,new ArrayList<Integer>());
+        Map<Integer,Integer> map = new HashMap<Integer,Integer>();
+        map.put(0,1);
+        dfs(root,targetSum,0,map);
         return count;
     }
     
-    void dfs(TreeNode root, int targetSum,List<Integer> path)
+    void dfs(TreeNode root, int targetSum, int sum, Map<Integer,Integer> map)
     {
         if(root == null)
         {
             return;
         }
         
-        path.add(root.val);
-        int sum = 0;
-        for(int i = path.size()-1 ; i >= 0 ; i--)
+        sum += root.val;
+        
+        if(map.containsKey(sum-targetSum))
         {
-            sum += path.get(i);
-            if(sum == targetSum)
-            {
-                count++;
-            }
+            count+= map.get(sum-targetSum);
         }
         
-        dfs(root.left,targetSum,path);
-        dfs(root.right,targetSum,path);
+        map.put(sum,map.getOrDefault(sum,0)+1);
+        dfs(root.left,targetSum,sum,map);
+        dfs(root.right,targetSum,sum,map);
         
-        path.remove(path.size() - 1);
+        map.put(sum,map.getOrDefault(sum,1)-1);
+        
     }
-  
+    
+    //sum = 10 ,15,18
+    //map {[10,1],[15,1],[18,1],[21,0]}
 }
