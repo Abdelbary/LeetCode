@@ -26,10 +26,7 @@ class Solution {
         {
             return 0;
         }
-        if(root.left == null && root.right == null)
-        {
-            return 1;
-        }
+       
         
         int leftDiamater  = dfs(root.left);
         int rightDiamater = dfs(root.right);
