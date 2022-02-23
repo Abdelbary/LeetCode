@@ -30,26 +30,17 @@ class Solution {
             return 0;
         }
         
-        int leftPathSum = dfs(root.left);
-        int rightPathSum = dfs(root.right);
+        int leftPathSum = Math.max(dfs(root.left),0);
+        int rightPathSum = Math.max(dfs(root.right),0);
+        
         
         if(root.val + leftPathSum + rightPathSum > pathSum)
         {
             pathSum = root.val + leftPathSum + rightPathSum;
         }
-        if(root.val + leftPathSum > pathSum)
-        {
-            pathSum = root.val + leftPathSum;
-        }
-        if(root.val + rightPathSum > pathSum)
-        {
-            pathSum = root.val + rightPathSum;
-        }
-        if(root.val > pathSum)
-        {
-            pathSum = root.val;
-        }
+       
+       
         
-        return Math.max(root.val,root.val + Math.max(leftPathSum,rightPathSum));
+        return root.val + Math.max(leftPathSum,rightPathSum);
     }
 }
