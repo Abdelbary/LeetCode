@@ -5,8 +5,6 @@ class Solution {
         {
             return result;
         }
-
-
         result[0] = lowerBound(nums,target);
         result[1] = upperBound(nums,target);
 
@@ -15,10 +13,7 @@ class Solution {
 
   static int lowerBound(int[] arr,int key)
   {
-    if(key > arr[arr.length-1])
-    {
-      return -1;
-    }
+  
     int start = 0 ;
     int end = arr.length-1;
     int mid;
@@ -45,10 +40,7 @@ class Solution {
 
   static int upperBound(int[] arr,int key)
   {
-    if(key > arr[arr.length-1])
-    {
-      return -1;
-    }
+  
     int start = 0 ;
     int end = arr.length-1;
     int mid;
