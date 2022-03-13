@@ -70,8 +70,6 @@ class Solution {
         
         if(mountainArr.get(start) != target)
         {
-            
-            System.out.println(mountainArr.get(start));
             return -1;
         }
         return start;
