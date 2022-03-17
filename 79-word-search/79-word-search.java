@@ -11,6 +11,7 @@ class Solution {
             {
                 vis[i][j] = true;
                 ans |= helper(board,word.toCharArray(),0,i,j);
+                if(ans) return true;
                 vis[i][j] = false;
             }
         }
@@ -39,6 +40,7 @@ class Solution {
             {
                 vis[newRow][newColum] = true;
                 ans |= helper(board,word,i+1,newRow,newColum);
+                if(ans) return true;
                 vis[newRow][newColum] = false;
             }
         }
