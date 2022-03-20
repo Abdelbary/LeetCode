@@ -5,24 +5,19 @@ class Solution {
         
         Arrays.sort(intervals,(a,b)->(a[0]-b[0]));
         //[[1,3],[2,6],[8,10],[15,18]]
-        for(int i  = 0 ; i < intervals.length ;)
+        
+        for(int[] interval : intervals)
         {
-            int currentIndx = i;
-            int start = intervals[i][0];
-            int end = intervals[i][1];
-            while(currentIndx+1 < intervals.length && end >= intervals[currentIndx+1][0])
+            if(newIntervals.isEmpty() || newIntervals.get(newIntervals.size()-1)[1] < interval[0])
             {
-                end = Math.max(end,intervals[currentIndx+1][1]);
-                currentIndx++;
+                newIntervals.add(interval);
             }
-            
-            if(currentIndx < intervals.length)
+            else
             {
-                newIntervals.add(new int[]{start,end});
+                newIntervals.get(newIntervals.size() - 1)[1] = Math.max(newIntervals.get(newIntervals.size() - 1)[1],interval[1]);
             }
-            
-            i = currentIndx + 1;
         }
+        
         return newIntervals.toArray(new int[newIntervals.size()][2]);
         //loop over them 
             //compare current to next if next is overlaping with current move current to next
