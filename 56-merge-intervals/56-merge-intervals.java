@@ -23,15 +23,7 @@ class Solution {
             
             i = currentIndx + 1;
         }
-        
-        int[][] ans = new int[newIntervals.size()][2];
-        
-        for(int i = 0 ; i< ans.length ; i++)
-        {
-            ans[i] = newIntervals.get(i);
-        }
-        
-        return ans;
+        return newIntervals.toArray(new int[newIntervals.size()][2]);
         //loop over them 
             //compare current to next if next is overlaping with current move current to next
             //add to answer 
