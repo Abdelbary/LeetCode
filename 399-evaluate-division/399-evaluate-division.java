@@ -25,11 +25,6 @@ class Solution {
                 ans[i] = -1;
                 continue;
             }
-            if(a == b)
-            {
-                ans[i] = 1;
-                continue;
-            }
             
             Map<String,Double> vis = new HashMap<String,Double>();
             vis.put(a,1.0);
