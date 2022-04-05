@@ -18,11 +18,6 @@ class Solution {
                 char charToRemove = s.charAt(windowStart++);
                 map.put(charToRemove,map.get(charToRemove)-1);
                 
-                for(int count : map.values())
-                {
-                  windowMaxElmentCount = Math.max(windowMaxElmentCount,count);
-                }
-                
                 if(map.get(charToRemove) == 0)
                 {
                     map.remove(charToRemove);
