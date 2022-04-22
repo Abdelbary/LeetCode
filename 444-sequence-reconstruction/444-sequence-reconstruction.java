@@ -28,14 +28,15 @@ class Solution {
                 return false;
             }
         }
+        boolean ret = true;
         
         if(next != -1)
         {
-            dfs(next);
+            ret &= dfs(next);
         }
         
         vis[node] = State.VISITED;
-        return true;
+        return ret;
     }
     
     
@@ -63,11 +64,13 @@ class Solution {
         }
         //System.out.println(adjList);
         int sourceCount = 0;
+        int startNode = -1;
         
-        for(int start : adjList.keySet())
+        for(int node : adjList.keySet())
         {
-            if(inDegree[start] == 0)
+            if(inDegree[node] == 0)
             {
+                startNode = node;
                 sourceCount++;
             }
             
@@ -78,17 +81,11 @@ class Solution {
         }
         
         
-        for(int start : adjList.keySet())
+        if(startNode != -1 )
         {
-            
-            if(inDegree[start] == 0 )
-            {
-                if( dfs(start) == false)
-                {
-                    return false;
-                }
-            }
+            return dfs(startNode);
         }
+        
         
         return true;
     }
