@@ -41,15 +41,13 @@ class Solution {
         while(left < right)
         {
             int sum = nums[left] + nums[right];
-            if(sum == target)
-            {
-                result.add(Arrays.asList(nums[left],nums[right]));
+          
+            if(sum < target || (left > start && nums[left] == nums[left-1]))
                 left++;
+            else if(sum > target || (right < nums.length-1 && nums[right] == nums[right+1])) 
                 right--;
-                while(left < right && nums[left] == nums[left-1]) left++;
-            }
-            else if(sum < target) left++;
-            else                  right--;
+            else
+                result.add(Arrays.asList(nums[left++],nums[right--]));
         }
         return result;
     }
