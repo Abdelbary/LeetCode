@@ -16,6 +16,11 @@ class Solution {
         if(start == nums.length)
             return result;
         
+        //optimization
+        int average = target/k;
+        
+        if(average < nums[start] || average > nums[nums.length-1])
+            return result;
         
         for(int i = start ; i < nums.length ; i++)
         {
