@@ -2,26 +2,29 @@ class Solution {
     public int[] sortedSquares(int[] nums) {
         int left = 0;
         int right = nums.length-1;
-        int pos = nums.length-1;
-        int[] ans = new int[nums.length];
-        while(right >= left)
+        int insertPos = nums.length-1;
+        int[] sortedSq = new int[nums.length];
+        while(left <= right)
         {
-            int lsq = nums[left]*nums[left];
-            int rsq = nums[right]*nums[right];
+            int lsq = nums[left] * nums[left];
+            int rsq = nums[right] * nums[right];
             
             if(lsq > rsq)
             {
-                ans[pos] = lsq;
+                sortedSq[insertPos] = lsq;   
                 left++;
             }
             else
             {
-                ans[pos] = rsq;
+                sortedSq[insertPos] = rsq;
                 right--;
             }
-            pos--;
+            
+            insertPos--;
         }
         
-        return ans;
+        return sortedSq;
     }
+    
+    
 }
