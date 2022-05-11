@@ -16,10 +16,10 @@ class Solution {
     
     public int kthSmallest(int[][] matrix, int k) {
         int N = matrix.length;
-        PriorityQueue<Node> minHeap = new PriorityQueue<Node>((a,b)->(a.val-b.val));
+        PriorityQueue<Node> minHeap = new PriorityQueue<Node>(Math.min(N,k),(a,b)->(a.val-b.val));
         
         //add first colum to the heap
-        for(int i = 0 ; i < N ; i++)
+        for(int i = 0 ; i < Math.min(N,k) ; i++)
         {
             minHeap.add(new Node(i,0,matrix[i][0])); 
         }
