@@ -18,10 +18,22 @@ class Solution {
         if(root == null) return new ArrayList<Integer>();
         
         List<Integer> list = new ArrayList<Integer>();
+        Deque<TreeNode> stack = new ArrayDeque<TreeNode>();
         
-        list.addAll(inorderTraversal(root.left));
-        list.add(root.val);
-        list.addAll(inorderTraversal(root.right));
+        TreeNode current = root;
+        
+        while(!stack.isEmpty() || current != null)
+        {
+            while(current != null) 
+            {
+                stack.offerLast(current);
+                current = current.left;
+            }
+            current = stack.removeLast();
+            list.add(current.val);
+            
+            current = current.right;
+        }
         return list;
     }
 }
