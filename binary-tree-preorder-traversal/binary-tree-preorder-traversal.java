@@ -16,7 +16,6 @@
 class Solution {
     public List<Integer> preorderTraversal(TreeNode root) {
         if(root == null) return new ArrayList<Integer>();
-        
         List<Integer> list = new ArrayList<Integer>();
         Deque<TreeNode> stack = new ArrayDeque<TreeNode>();
         
