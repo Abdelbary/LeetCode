@@ -14,9 +14,24 @@
  * }
  */
 class Solution {
-    public int maxDepth(TreeNode root) {
-        if(root == null) return 0;
+    int ans;
+    private void  maxDepthRecursive(TreeNode root,int level)
+    {
+        if(root == null) return;
         
-        return Math.max(maxDepth(root.right),maxDepth(root.left))+1;
+        if(root.left == null && root.right == null) ans = Math.max(ans,level);
+        
+        maxDepthRecursive(root.left,level+1);
+        maxDepthRecursive(root.right,level+1);
+    }
+    
+    public int maxDepth(TreeNode root) {
+        ans = 0;
+        
+        if(root == null) return ans;
+        
+        maxDepthRecursive(root, 1);
+        
+        return ans;
     }
 }
