@@ -12,7 +12,7 @@ class Solution {
         int right = nums.length-1-(i-left);
         
         
-        if(cache[i][left] == 0 )//(!cache.containsKey(new Pair(i,left)))//
+        if(cache[i][left] == 0 )//(!cache.containsKey(new Pair(i,left)))
         {
             cache[i][left] = Math.max((mult*nums[left]+dp(i+1,left+1)),(mult*nums[right]+dp(i+1,left)));
             //cache.put(new Pair(i,left),Math.max((mult*nums[left]+dp(i+1,left+1)),(mult*nums[right]+dp(i+1,left))));
