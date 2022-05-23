@@ -1,36 +1,44 @@
 class Solution {
     public boolean checkInclusion(String s1, String s2) {
-        Map<Character,Integer> map = new HashMap<Character,Integer>();
-        int matchedChar = 0;
+        Map<Character,Integer> charFrq = new HashMap<Character,Integer>();
         
         for(char c : s1.toCharArray())
-        {
-            map.put(c,map.getOrDefault(c,0)+1);
-        }
+            charFrq.put(c,charFrq.getOrDefault(c,0)+1);
         
+        int windowStart = 0;
+        int charCount = 0;
         for(int windowEnd = 0 ; windowEnd < s2.length() ; windowEnd++)
         {
-            char currentChar = s2.charAt(windowEnd);
-            if(map.containsKey(currentChar) )
-            {
-                map.put(currentChar,map.get(currentChar)-1);
-                
-                if(map.get(currentChar) == 0) matchedChar++;
-            }
+            char charIn = s2.charAt(windowEnd);
             
-            if(windowEnd >= s1.length())
+            if(charFrq.containsKey(charIn))
             {
-                char charToRemove = s2.charAt(windowEnd-s1.length());
-                if(map.containsKey(charToRemove))
+                charFrq.put(charIn,charFrq.get(charIn)-1);
+                
+                if(charFrq.get(charIn) == 0)
                 {
-                    if(map.get(charToRemove) == 0) matchedChar--;
-                    
-                    map.put(charToRemove,map.get(charToRemove)+1);
+                    charCount++;
                 }
             }
             
-            if(matchedChar == map.size()) return true;
+            if(charCount == charFrq.size())
+                return true;
+            
+            if(windowEnd - windowStart + 1 >= s1.length())
+            {
+                char charOut = s2.charAt(windowStart++);
+                
+                if(charFrq.containsKey(charOut))
+                {
+                    if(charFrq.get(charOut) == 0)
+                        charCount--;
+                    
+                    charFrq.put(charOut,charFrq.get(charOut)+1);
+                }
+            }
         }
+        
         return false;
+        
     }
 }
