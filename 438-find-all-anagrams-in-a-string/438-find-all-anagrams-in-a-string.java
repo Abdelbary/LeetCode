@@ -1,43 +1,46 @@
 class Solution {
     public List<Integer> findAnagrams(String s, String p) {
-        Map<Character,Integer> map = new HashMap<Character,Integer>();
-        int sLen = s.length();
-        int pLen = p.length();
-        int matchedChar = 0;
-        int windowStart =0;
-
+        List<Integer> result = new ArrayList<Integer>();
+        Map<Character,Integer> charFrq = new HashMap<Character,Integer>();
+        
         for(char c : p.toCharArray())
         {
-            map.put(c,map.getOrDefault(c,0)+1);
+            charFrq.put(c,charFrq.getOrDefault(c,0)+1);
         }
         
-        List<Integer> anagramsIndxs = new ArrayList<Integer>();
+        int windowStart = 0;
+        int charCount = 0;
         
-        for(int windowEnd = 0 ; windowEnd < sLen ; windowEnd++)
+        
+        for(int windowEnd = 0 ; windowEnd < s.length() ; windowEnd++)
         {
-            char currentChar = s.charAt(windowEnd);
+            char charIn = s.charAt(windowEnd);
             
-            if(map.containsKey(currentChar))
+            if(charFrq.containsKey(charIn))
             {
-                map.put(currentChar,map.get(currentChar)-1);
-                if(map.get(currentChar) == 0) matchedChar++;
+                charFrq.put(charIn,charFrq.get(charIn)-1);
+                
+                if(charFrq.get(charIn) == 0)
+                    charCount++;
             }
             
-            if(windowEnd-windowStart+1 > pLen)
+            if(charCount == charFrq.size())
+                result.add(windowStart);
+            
+            if(windowEnd - windowStart + 1 >= p.length())
             {
-                char charToRemove = s.charAt(windowStart);
-                windowStart++;
+                char charOut = s.charAt(windowStart++);
                 
-                if(map.containsKey(charToRemove))
+                if(charFrq.containsKey(charOut))
                 {
-                    if(map.get(charToRemove) == 0) matchedChar--;
-                    map.put(charToRemove,map.get(charToRemove)+1);
+                    if(charFrq.get(charOut) == 0)
+                        charCount--;
+                    
+                    charFrq.put(charOut,charFrq.get(charOut)+1);
                 }
             }
-            
-            if(matchedChar == map.size()) anagramsIndxs.add(windowStart);
         }
         
-        return anagramsIndxs;
+        return result;
     }
 }
