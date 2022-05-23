@@ -12,32 +12,37 @@ class Solution {
         int matchedChars = 0;
         for(int windowEnd = 0; windowEnd < s.length() ; windowEnd++)
         {
-            char currentChar = s.charAt(windowEnd);
+            //add
+            char charIn = s.charAt(windowEnd);
             
-            if(map.containsKey(currentChar))
+            if(map.containsKey(charIn))
             {
-                map.put(currentChar,map.get(currentChar)-1);
-                if(map.get(currentChar) == 0) matchedChars++;
+                map.put(charIn,map.get(charIn)-1);
+                
+                if(map.get(charIn) == 0)
+                    matchedChars++;
             }
-            
-            char charToRemove = s.charAt(windowStart);
-            int windowSize = windowEnd-windowStart+1;
-            while(windowSize > t.length() && (!map.containsKey(charToRemove) || map.get(charToRemove) < 0))
+            //fix
+            char charOut = s.charAt(windowStart);
+            while((windowEnd-windowStart+1 > t.length()) && (!map.containsKey(charOut) || map.get(charOut) < 0))
             {
                 windowStart++;
-                windowSize--;
-
-                if(map.containsKey(charToRemove))
-                    map.put(charToRemove,map.get(charToRemove)+1);
-               
-                charToRemove = s.charAt(windowStart);
+                
+                if(map.containsKey(charOut))
+                {
+                    map.put(charOut,map.get(charOut)+1); 
+                }
+                
+                charOut = s.charAt(windowStart);
+                
             }
             
-            if(matchedChars == map.size() && windowSize < minWindowSize)
+            if(matchedChars == map.size() && minWindowSize > windowEnd-windowStart+1)
             {
-                minWindowSize = windowSize;
-                minStartPos = windowStart;
+                minWindowSize = windowEnd - windowStart + 1;
+                minStartPos   = windowStart;
             }
+            
         }
         
         return (minStartPos == Integer.MAX_VALUE)? "" :s.substring(minStartPos,minStartPos+minWindowSize);
