@@ -11,7 +11,7 @@ class Solution {
             while(windowStart <= windowEnd && sum >= k)
                 sum /= nums[windowStart++];
             
-            if(windowStart <= windowEnd && sum < k)
+            if(sum < k)
                 ans += windowEnd - windowStart + 1;
         }
         
