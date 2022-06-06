@@ -1,40 +1,30 @@
 class Solution {
-    public boolean isHappy(int n) {
-        int fast = moveFast(n);
-        int slow = moveSlow(n);
-        
-        while(fast != slow && fast != 1)
-        {
-            fast = moveFast(fast);
-            slow = moveSlow(slow);
-        }
-        
-        if( fast == 1)
-        {
-            return true;
-        }
-        return false;
-    }
     
-    int moveFast(int n)
+    private int calculate(int n)
     {
-        int sum = n;
-        for(int i = 0 ; i < 2 ; i++)
-        {
-            sum = moveSlow(sum);
-        }
+        int result = 0;
         
-        return sum;
-    }
-    
-    int moveSlow(int n)
-    {
-        int sum = 0;
         while(n > 0)
         {
-            sum+= (int)(Math.pow(n%10,2));
-            n /=10;
+            int digit =  n%10;
+            n/=10;
+            result += digit*digit;
         }
-        return sum;
+        
+        return result;
+    }
+    public boolean isHappy(int n) {
+        if(n == 1)
+            return true;
+        int fast = n;
+        int slow = n;
+        
+        do{
+            fast = calculate(calculate(fast));
+            slow = calculate(slow);
+        }while(fast != 1 && fast != slow);
+        
+        
+        return (fast == 1);
     }
 }
