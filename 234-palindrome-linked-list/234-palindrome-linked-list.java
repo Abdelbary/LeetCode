@@ -9,60 +9,68 @@
  * }
  */
 class Solution {
-    public boolean isPalindrome(ListNode head) {
-        if(head == null || head.next == null)
+    
+    private ListNode reverseLinkedList(ListNode head)
+    {
+        if(head == null)
+            return head;
+        
+        ListNode dhead = new ListNode();
+        
+        dhead.next = head;
+        ListNode tail = head;
+        ListNode current = tail.next;
+        
+        while(current != null)
         {
-            return true;
+            tail.next = current.next;
+            current.next = dhead.next;
+            dhead.next = current;
+            current = tail.next;
         }
+        
+        return dhead.next;
+    }
+    private ListNode getSecondMiddle(ListNode head)
+    {
+        if(head == null || head.next == null)
+            return head;
         
         ListNode fast = head.next.next;
         ListNode slow = head.next;
-        
+        ListNode pre  = head;
         while(fast != null && fast.next != null)
         {
             fast = fast.next.next;
-            slow = slow.next;
-        }
-        if(fast == null)//even linked list
-        {
-           slow = reverse(slow);
-        }
-        else //odd linked list 
-        {
-            slow.next = reverse(slow.next);  
+            pre = slow;
             slow = slow.next;
         }
         
-        ListNode current = head;
-        while(slow != null && slow.val == current.val)
-        {
+        if(fast != null)//odd need to jump middle node [fast.next == null]
             slow = slow.next;
-            current = current.next;
-        }
         
-        return (slow == null);
+        
+        pre.next = null;
+        
+        return slow;
+        
     }
     
-    ListNode reverse(ListNode head)
-    {
-        if(head == null)
-        {
-            return null;
-        }
-        //1,2,3
-        ListNode dHead = new ListNode();
-        dHead.next = head; //1
-        ListNode tail = dHead.next;//1
-        ListNode currentNode = tail.next;//2
+    public boolean isPalindrome(ListNode head) {
+        if(head == null || head.next == null)
+            return true;
         
-        while(currentNode != null)
+        ListNode half = getSecondMiddle(head);
+        half          = reverseLinkedList(half);
+        while(half != null && head != null)
         {
-            tail.next = currentNode.next;//1-2-3 -> 2-1-3
-            currentNode.next = dHead.next;
-            dHead.next = currentNode;
-            currentNode = tail.next;
+            if(half.val != head.val)
+                return false;
+            
+            half = half.next;
+            head = head.next;
         }
         
-        return dHead.next;
+        return (half == null && head == null);
     }
 }
