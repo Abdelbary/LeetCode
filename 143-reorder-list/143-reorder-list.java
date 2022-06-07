@@ -9,63 +9,73 @@
  * }
  */
 class Solution {
-    public void reorderList(ListNode head) {
-        if(head == null || head.next == null)
-        {
-            return;
-        }
-        ListNode fast = head.next.next;
-        ListNode slow = head.next;
-        ListNode slowPrev = head;
-        while(fast != null && fast.next != null)
-        {
-            slowPrev  = slowPrev.next;
-            fast = fast.next.next;
-            slow = slow.next;
-        }
-        if(fast != null) //mean that the fast.next = null and it alsow means odd numbers of node in the linked list
-        {
-            slow = slow.next;
-            slowPrev = slowPrev.next;
-        }
-        slowPrev.next = null;
-        ListNode nodeA = head;
-        ListNode nodeB =   reverse(slow);
-        
-        while(nodeA != null && nodeB != null)
-        {
-            ListNode tmp = nodeA.next;
-            nodeA.next = nodeB;
-            nodeA = tmp;
-            
-            tmp = nodeB.next;
-            nodeB.next = nodeA;
-            nodeB = tmp;
-            
-        }
-    }
-    
-    ListNode reverse(ListNode head)
+    private ListNode getMiddle(ListNode head)
     {
         if(head == null || head.next == null)
-        {
             return head;
-        }
         
-        
-        ListNode dHead = new ListNode();
-        dHead.next = head;
-        ListNode tail = dHead.next;
-        ListNode currentNode = tail.next;
-        
-        while(currentNode != null)
+        ListNode fast = head.next.next;
+        ListNode slow = head.next;
+        ListNode pre = head;
+        while(fast != null && fast.next != null)
         {
-            tail.next = currentNode.next;
-            currentNode.next = dHead.next;
-            dHead.next = currentNode;
-            currentNode = tail.next;
+            pre = slow;
+            slow = slow.next;
+            fast = fast.next.next;
         }
+        
+        pre.next = null;
+        
+        return slow;
+    }
+    
+    private ListNode reverseLinkedList(ListNode head)
+    {
+        if(head == null || head.next == null)
+            return head;
+        
+        ListNode dhead = new ListNode();
+        dhead.next = head;
+        ListNode tail = head;
+        ListNode current = head.next;
+        
+        while(current != null)
+        {
+            tail.next = current.next;
+            current.next = dhead.next;
+            dhead.next = current;
+            current = tail.next;
+        }
+        
+        return dhead.next;
+    }
+    public void reorderList(ListNode head) {
+        //edge cases
+        if(head == null || head.next == null)
+            return;
+        
+        //get  middle
+        //reverse second list
+        ListNode secondHalf = reverseLinkedList(getMiddle(head));
+        
+        ListNode newList = head;
+        ListNode next1 = head;
+        ListNode next2 = secondHalf;
+        //reconstruct
+        while(head != null && secondHalf != null)
+        {
+            next1 = head.next;
+            next2 = secondHalf.next;
+            head.next       = secondHalf;
             
-        return dHead.next;
+            if(next1 == null && next2 != null) //odd linked list case 
+                break;
+            secondHalf.next = next1;
+            
+            head = next1;
+            secondHalf = next2;
+        }
+        
+        
     }
 }
