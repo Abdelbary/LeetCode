@@ -6,8 +6,8 @@ class Solution {
         {
             if(nums[Math.abs(num)-1] < 0)
                 result.add(Math.abs(num));
-            
-            nums[Math.abs(num)-1] *= -1;
+            else
+                nums[Math.abs(num)-1] *= -1;
         }
         
         return result;
